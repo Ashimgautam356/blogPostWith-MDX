@@ -1,8 +1,7 @@
 
-import { Badge } from '../ui/badge';
-import { Input } from '../ui/input';
-import { Card ,CardContent} from '../ui/card';
-
+import { Badge } from '../components/ui/badge';
+import { Input } from '../components/ui/input';
+import { Card ,CardContent} from '../components/ui/card';
 
 
 const blogData = [
@@ -53,6 +52,8 @@ const blogData = [
 const tags = ["All", "IT", "AI", "cloud", "IoT", "AI ethics"];
 
 const Blog = () => {
+
+
  return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-4xl font-bold text-center">Blogs & Articles</h1>
