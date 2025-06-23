@@ -1,10 +1,18 @@
-import { Button } from "@/components/ui/button"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import MainLayout from "./layout/MainLayout"
+import Blog from "./components/other/Blog"
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button variant={"outline" }>Click me</Button>
-    </div>
+
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<MainLayout />}>
+              <Route index element={<Blog></Blog>}></Route>
+          </Route>
+      </Routes>
+    </BrowserRouter>
+
   )
 }
 
