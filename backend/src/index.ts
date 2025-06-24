@@ -33,7 +33,7 @@ app.get("/getAll-post",async(req:Request,res:Response)=>{
     const tagsSet = new Set<string>();
 
     const posts = await Promise.all(
-      mdxFiles.map(async (file) => {
+      mdxFiles.map(async (file:string) => {
         const filePath = path.join(postsDir, file);
         const content = await fs.readFile(filePath, "utf-8");
 
