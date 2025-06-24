@@ -23,7 +23,8 @@ const loginSchema = z.object({
   password: z.string().min(6, { message: "Min 6 characters required" }),
 });
 
-type loginType = z.infer<typeof loginSchema>
+// used while sending data in db
+// type loginType = z.infer<typeof loginSchema>
 
 
 const Login = () => {
@@ -37,7 +38,7 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  function  handleSubmit(data:loginType) {
+  function  handleSubmit() {
       
     // no we can send the data to the db but for now i gone set random words to the token 
 

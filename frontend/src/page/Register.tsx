@@ -30,13 +30,13 @@ const registerSchema = loginSchema.extend({
   path: ["confirmPassword"],
 });
 
-
-type  registerType = z.infer<typeof registerSchema>
+// used while sending data in db 
+// type  registerType = z.infer<typeof registerSchema>
 
 const Register = () => {
   const navigate = useNavigate()
 
-  function handleRegister(data:registerType){
+  function handleRegister(){
 
     navigate('/login')
   }

@@ -1,6 +1,5 @@
 import Footer from '@/components/other/Footer'
 import Nav from '@/components/other/Nav'
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
