@@ -22,13 +22,15 @@ app.get("/getAll-post",async(req:Request,res:Response)=>{
 
     const files = await fs.readdir(postsDir);
     const mdxFiles = files.filter((file) => file.endsWith(".mdx"));
-
     const tagsSet = new Set<string>();
 
     const posts = await Promise.all(
       mdxFiles.map(async (file) => {
         const filePath = path.join(postsDir, file);
         const content = await fs.readFile(filePath, "utf-8");
+
+        const slug = path.parse(filePath).name
+
 
         const { data } = matter(content);
 
@@ -43,6 +45,7 @@ app.get("/getAll-post",async(req:Request,res:Response)=>{
           author: data.author || "Unknown",
           date: data.date || "Unknown",
           tags: data.tag || [],
+          slug: slug || ""
         };
       })
     );
@@ -56,6 +59,33 @@ app.get("/getAll-post",async(req:Request,res:Response)=>{
     res.status(500).json({ message: "Failed to load posts" });
   }
   
+})
+
+
+app.get("/post/:slug", async(req:Request, res:Response)=>{
+
+ const { slug } = req.params;
+  const postsDir = path.join(__dirname, "../posts");
+
+  try {
+    const filePath = path.join(postsDir, `${slug}.mdx`);
+    const rawContent = await fs.readFile(filePath, "utf-8");
+
+    const { content, data } = matter(rawContent); // data = frontmatter
+
+    res.json({
+      title: data.title || slug,
+      date: data.date || null,
+      author: data.author || null,
+      image: data.image || null,
+      tags: data.tags || [],
+      content, // only MDX content (without frontmatter)
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "error fetching specific slug" });
+  }
 })
 
 
