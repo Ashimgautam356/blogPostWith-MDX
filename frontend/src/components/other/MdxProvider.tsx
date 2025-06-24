@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { evaluate } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-dev-runtime";
-import { useMDXComponents } from "@mdx-js/react";
 import type { MDXComponents } from "mdx/types";
+import CallToAction from './CalltoAction'
+
 
 type MdxRendererProps = {
   content: string;
@@ -10,7 +11,10 @@ type MdxRendererProps = {
 
 export function MdxRenderer({ content }: MdxRendererProps) {
   const [CompiledMDX, setCompiledMDX] = useState<React.ComponentType<{ components?: MDXComponents }> | null>(null);
-  const components = useMDXComponents();
+
+    const mdxComponents: MDXComponents = {
+    CallToAction,
+  };
 
   useEffect(() => {
     const compileMDX = async () => {
@@ -32,5 +36,5 @@ export function MdxRenderer({ content }: MdxRendererProps) {
 
   if (!CompiledMDX) return <p>Loading...</p>;
 
-  return <CompiledMDX components={components} />;
+  return <CompiledMDX components={mdxComponents} />;
 }
