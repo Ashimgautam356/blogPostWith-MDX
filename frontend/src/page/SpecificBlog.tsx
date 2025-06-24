@@ -2,6 +2,9 @@ import { useEffect,useState } from 'react'
 import { useNavigate , useParams } from 'react-router-dom'
 import { MdxRenderer } from "../components/other/MdxProvider";
 import  axios  from "axios";
+
+
+
 const SpecificBlog = () => {
     const navigate = useNavigate()
     const {slug} = useParams()
@@ -16,7 +19,9 @@ const SpecificBlog = () => {
     }
 
     async function fetchPost() {
-      const resp = await axios.get(`http://localhost:3000/post/${slug}`)
+      const apiurl = import.meta.env.VITE_API_URL
+      console.log(apiurl)
+      const resp = await axios.get(`${apiurl}/post/${slug}`)
       if(resp.status !==200){
         console.log("error while fetching specific post")
       }
@@ -35,7 +40,7 @@ const SpecificBlog = () => {
                 <img
                     src={`https://${meta.image}`}
                     alt={meta.title}
-                    className="w-full h-auto  object-cover rounded-xl shadow-lg mb-8" 
+                    className="w-full max-h-98 object-center object-cover rounded-xl shadow-lg mb-8" 
                 />
             )}
 

@@ -38,7 +38,8 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/getAll-post');
+        const apiUrl = import.meta.env.VITE_API_URL
+        const res = await axios.get(`${apiUrl}/getAll-post`);
         setBlogs(res.data); // expects an array of blog objects
       } catch (error) {
         console.error("Failed to fetch blogs:", error);

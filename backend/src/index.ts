@@ -1,6 +1,6 @@
 import  Express, { Request, Response }  from "express";
 import cors from 'cors'
-
+import dotenv from 'dotenv'
 
 import fs from 'fs/promises'
 import path from "path";
@@ -8,8 +8,16 @@ import matter from "gray-matter";
 
 const app =  Express()
 
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+dotenv.config({ path: envFile });
 
-app.use(cors())
+const allowedOrigin = process.env.FRONTEND_URL
+console.log(allowedOrigin)
+
+app.use(cors({
+  origin: allowedOrigin, 
+  credentials:true
+}))
 
 app.get("/",async(req:Request,res:Response)=>{
     res.send("!!!hello!!!")
