@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GitBranch } from "lucide-react";
 import logo from "@/assets/logo.png";
 import google from "@/assets/google.svg";
-
+import { useNavigate } from "react-router-dom";
 
 
 const loginSchema = z.object({
@@ -23,13 +23,28 @@ const loginSchema = z.object({
   password: z.string().min(6, { message: "Min 6 characters required" }),
 });
 
+type loginType = z.infer<typeof loginSchema>
+
+
 const Login = () => {
+
+  const navigate = useNavigate()
+
    const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
   const [showPassword, setShowPassword] = useState(false);
+
+  function  handleSubmit(data:loginType) {
+      
+    // no we can send the data to the db but for now i gone set random words to the token 
+
+    localStorage.setItem("token","aslflasjfo324242olnsofas56(**&&*GHBU%&*^*")
+    navigate("/")
+    
+  }
   return (
     <div className="h-screen w-screen flex justify-center items-center">
 
@@ -41,15 +56,16 @@ const Login = () => {
       </div>
 
       <Form {...form}>
-        <form className="space-y-4 mt-6" onSubmit={form.handleSubmit((data) => console.log(data))}>
+        <form className="space-y-4 mt-6" onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             control={form.control}
+        
             name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <Input placeholder="Enter your email" className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,17 +79,18 @@ const Login = () => {
               <FormItem>
                 <div className="flex justify-between items-center">
                   <FormLabel>Password</FormLabel>
-                  <span className="text-sm text-blue-700 cursor-pointer">Forgot password?</span>
+                  <span className="text-xs hover:underline text-blue-700 cursor-pointer">Forgot password?</span>
                 </div>
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
+                      className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]"
                       placeholder="Enter your password"
                       {...field}
                     />
                     <span
-                      className="absolute right-3 top-2 text-sm text-blue-700 cursor-pointer"
+                      className="absolute right-3 top-3 text-sm font-semibold text-[#99A1AF]  hover:text-blue-700 cursor-pointer"
                       onClick={() => setShowPassword((p) => !p)}
                     >
                       {showPassword ? "Hide" : "Show"}
@@ -85,12 +102,12 @@ const Login = () => {
             )}
           />
 
-          <Button type="submit" className="w-full bg-[#2C5EA8] hover:bg-[#244b88] text-white">
+          <Button type="submit" className="w-full bg-[#244b88] hover:bg-[#2C5EA8] text-white">
             Sign In
           </Button>
 
-          <div className="flex items-center gap-2 text-sm justify-center text-muted-foreground">
-            <span className="border-t w-full" /> or continue with <span className="border-t w-full" />
+          <div className="flex items-center gap-2 text-sm justify-between text-muted-foreground">
+            <span className="border-t w-[30%]" /> or continue with <span className="border-t w-[30%]" />
           </div>
 
           <div className="flex gap-4 mt-2">
@@ -106,7 +123,7 @@ const Login = () => {
       </Form>
 
       <p className="text-center text-sm mt-6 text-muted-foreground">
-        Don't have an account? <span className="text-blue-700 cursor-pointer">Register</span>
+        Don't have an account? <span className="text-blue-700 cursor-pointer hover:underline font-semibold">Register</span>
       </p>
     </div>
     </div>

@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GitBranch } from "lucide-react";
 import logo from "@/assets/logo.png";
 import google from "@/assets/google.svg";
-
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -31,7 +31,16 @@ const registerSchema = loginSchema.extend({
 });
 
 
+type  registerType = z.infer<typeof registerSchema>
+
 const Register = () => {
+  const navigate = useNavigate()
+
+  function handleRegister(data:registerType){
+
+    navigate('/login')
+  }
+
 const form = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
@@ -49,7 +58,7 @@ const form = useForm({
       </div>
 
       <Form {...form}>
-        <form className="space-y-4 mt-6" onSubmit={form.handleSubmit((data) => console.log(data))}>
+        <form className="space-y-4 mt-6" onSubmit={form.handleSubmit(handleRegister)}>
           <FormField
             control={form.control}
             name="name"
@@ -57,7 +66,7 @@ const form = useForm({
               <FormItem>
                 <FormLabel>FullName</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your full name" {...field} />
+                  <Input placeholder="Enter your full name" className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -71,7 +80,7 @@ const form = useForm({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <Input placeholder="Enter your email" className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,10 +98,11 @@ const form = useForm({
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]"
                       {...field}
                     />
                     <span
-                      className="absolute right-3 top-2 text-sm text-blue-700 cursor-pointer"
+                      className="absolute right-3 top-3 text-sm font-semibold text-[#99A1AF]  hover:text-blue-700 cursor-pointer"
                       onClick={() => setShowPassword((p) => !p)}
                     >
                       {showPassword ? "Hide" : "Show"}
@@ -115,10 +125,11 @@ const form = useForm({
                     <Input
                       type={showConfirm ? "text" : "password"}
                       placeholder="Confirm your password"
+                      className="h-[3rem] placeholder:text-[#99A1AF] placeholder:font-semibold bg-[#F9FAFB]"
                       {...field}
                     />
                     <span
-                      className="absolute right-3 top-2 text-sm text-blue-700 cursor-pointer"
+                      className="absolute right-3 top-3 text-sm font-semibold text-[#99A1AF]  hover:text-blue-700 cursor-pointer"
                       onClick={() => setShowConfirm((p) => !p)}
                     >
                       {showConfirm ? "Hide" : "Show"}
@@ -135,7 +146,7 @@ const form = useForm({
           </Button>
 
           <div className="flex items-center gap-2 text-sm justify-center text-muted-foreground">
-            <span className="border-t w-full" /> or continue with <span className="border-t w-full" />
+            <span className="border-t w-[30%]" /> or continue with <span className="border-t w-[30%]" />
           </div>
 
           <div className="flex gap-4 mt-2">
@@ -151,7 +162,7 @@ const form = useForm({
       </Form>
 
       <p className="text-center text-sm mt-6 text-muted-foreground">
-        Already have an account? <span className="text-blue-700 cursor-pointer">Sign in</span>
+        Already have an account? <span className="text-blue-700 cursor-pointer hover:underline">Sign in</span>
       </p>
     </div>
     </div>
