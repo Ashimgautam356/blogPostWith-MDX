@@ -162,7 +162,7 @@ const form = useForm({
       </Form>
 
       <p className="text-center text-sm mt-6 text-muted-foreground">
-        Already have an account? <span className="text-blue-700 cursor-pointer hover:underline">Sign in</span>
+        Already have an account? <span className="text-blue-700 cursor-pointer hover:underline" onClick={()=>navigate('/login')}>Sign in</span>
       </p>
     </div>
     </div>

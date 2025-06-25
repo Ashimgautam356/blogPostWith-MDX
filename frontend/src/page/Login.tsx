@@ -124,7 +124,7 @@ const Login = () => {
       </Form>
 
       <p className="text-center text-sm mt-6 text-muted-foreground">
-        Don't have an account? <span className="text-blue-700 cursor-pointer hover:underline font-semibold">Register</span>
+        Don't have an account? <span className="text-blue-700 cursor-pointer hover:underline font-semibold" onClick={()=>navigate('/register')}>Register</span>
       </p>
     </div>
     </div>
