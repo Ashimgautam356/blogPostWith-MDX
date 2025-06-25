@@ -27,12 +27,26 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
 
   const [filtredTag, setFiltredTag] = useState("all")
+  const [search, setSearch] = useState("");
 
-  const filtredPost = filtredTag === "all"? blogs?.posts || []: blogs?.posts.filter((post)=>{
-   return post.tags?.some((tag:string)=>{
-    return filtredTag === tag.toLowerCase()
-   })
-  }) || []
+const filtredPost =
+  blogs?.posts
+    .filter((post) => {
+      // Filter by tag
+      const matchesTag =
+        filtredTag === "all"
+          ? true
+          : post.tags?.some((tag: string) => tag.toLowerCase() === filtredTag);
+
+      // Filter by search input
+      const matchesSearch =
+        post.title.toLowerCase().includes(search.toLowerCase()) ||
+        post.tags?.some((tag: string) =>
+          tag.toLowerCase().includes(search.toLowerCase())
+        );
+
+      return matchesTag && matchesSearch;
+    }) || [];
 
 
   useEffect(() => {
@@ -73,7 +87,7 @@ const Blog = () => {
       </p>
 
       <div className="mt-6">
-        <Input placeholder="Search articles..." className="w-full  mx-auto min-h-[3rem] px-4 py-2 rounded-md border-transparent bg-[#f5f7fa] focus:border-2 focus:border-[#3D68A4]" />
+        <Input placeholder="Search articles..." className="w-full  mx-auto min-h-[3rem] px-4 py-2 rounded-md border-transparent bg-[#f5f7fa] focus:border-2 focus:border-[#3D68A4]"  onChange={(e) => setSearch(e.target.value)}/>
       </div>
 
       <div className="flex flex-wrap gap-2  my-6">
@@ -106,7 +120,7 @@ const Blog = () => {
 
       {loading ? (
         <p className="text-center text-sm text-muted-foreground">Loading...</p>
-      ) : blogs?.posts.length === 0 ? (
+      ) : filtredPost.length === 0 ? (
         <p className="text-center text-sm text-muted-foreground">No blogs found.</p>
       ) : (
         <>

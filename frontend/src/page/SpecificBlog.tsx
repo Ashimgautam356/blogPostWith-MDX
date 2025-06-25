@@ -20,7 +20,6 @@ const SpecificBlog = () => {
 
     async function fetchPost() {
       const apiurl = import.meta.env.VITE_API_URL
-      console.log(apiurl)
       const resp = await axios.get(`${apiurl}/post/${slug}`)
       if(resp.status !==200){
         console.log("error while fetching specific post")
