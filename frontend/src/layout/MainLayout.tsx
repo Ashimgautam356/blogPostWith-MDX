@@ -1,4 +1,3 @@
-import Footer from '@/components/other/Footer'
 import Nav from '@/components/other/Nav'
 import { Outlet } from 'react-router-dom'
 
@@ -9,7 +8,7 @@ const MainLayout = () => {
         <div className='pt-14'>
         <Outlet></Outlet>
         </div>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
     </div>
   )
 }

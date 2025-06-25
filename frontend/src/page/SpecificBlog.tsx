@@ -25,7 +25,6 @@ const SpecificBlog = () => {
       if(resp.status !==200){
         console.log("error while fetching specific post")
       }
-      console.log(resp.data)
       setMeta({title: resp.data.title, date:resp.data.date, author:resp.data.author, image: resp.data.image})
       setContent(resp.data.content)
     }
