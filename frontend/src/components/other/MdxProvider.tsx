@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { evaluate } from "@mdx-js/mdx";
-import * as runtime from "react/jsx-dev-runtime";
+import * as devruntime from "react/jsx-dev-runtime";
+import * as prodruntime from "react/jsx-runtime";
 import type { MDXComponents } from "mdx/types";
 import CallToAction from './CalltoAction'
 
@@ -8,6 +9,8 @@ import CallToAction from './CalltoAction'
 type MdxRendererProps = {
   content: string;
 };
+
+const runtime = import.meta.env.MODE === 'development' ? devruntime: prodruntime
 
 export function MdxRenderer({ content }: MdxRendererProps) {
   const [CompiledMDX, setCompiledMDX] = useState<React.ComponentType<{ components?: MDXComponents }> | null>(null);
@@ -27,7 +30,7 @@ export function MdxRenderer({ content }: MdxRendererProps) {
 
         setCompiledMDX(() => result.default as React.ComponentType<{ components?: MDXComponents }>);
       } catch (err) {
-        console.error("❌ MDX evaluate error:", err);
+        console.error("MDX evaluate error:", err);
       }
     };
 
